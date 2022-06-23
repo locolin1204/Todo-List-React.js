@@ -31,14 +31,27 @@ const StyledIconText = styled.div`
 	align-items: center;
 `;
 
-function TodoItem({ text, id }) {
+const StyledTag = styled.button`
+	--tag-color: #0059d6;
+	color: var(--tag-color);
+	background-color: #e2eeff;
+	font-size: 0.9rem;
+	padding: 0.4rem 1.3rem;
+	border: solid var(--tag-color) 1px;
+	border-radius: 50rem;
+	margin-left: 1.3rem;
+`;
+
+function TodoItem({ item }) {
 	return (
 		<StyledTodoItem>
 			<StyledIconText>
 				<StyledIcons>
 					<MdCheckBoxOutlineBlank />
 				</StyledIcons>
-				<StyledText> {text} </StyledText>
+				<StyledText> {item.text} </StyledText>
+				{item.home && <StyledTag>home</StyledTag>}
+				{item.work && <StyledTag>work</StyledTag>}
 			</StyledIconText>
 			<StyledIcons>
 				<GoX />
@@ -48,4 +61,4 @@ function TodoItem({ text, id }) {
 }
 
 export default TodoItem;
-export { StyledTodoItem, StyledIconText };
+export { StyledTodoItem, StyledIconText, StyledTag };

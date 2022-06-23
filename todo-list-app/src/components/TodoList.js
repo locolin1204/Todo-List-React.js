@@ -5,13 +5,31 @@ import styled from "styled-components";
 
 const StyledTodoList = styled.div``;
 
-function TodoList({ list }) {
+function TodoList({
+	list,
+	handleTextInput,
+	textInput,
+	handleAddItem,
+	handleWorkTag,
+	handleHomeTag,
+	homeInput,
+	workInput,
+}) {
 	return (
 		<StyledTodoList>
 			<div>
-				<AddItem />
+				<AddItem
+					handleTextInput={handleTextInput}
+					textInput={textInput}
+					handleAddItem={handleAddItem}
+					g
+					handleHomeTag={handleHomeTag}
+					handleWorkTag={handleWorkTag}
+					homeInput={homeInput}
+					workInput={workInput}
+				/>
 				{list.map(item => (
-					<TodoItem text={item.text} />
+					<TodoItem item={item} key={item.id} />
 				))}
 			</div>
 		</StyledTodoList>
