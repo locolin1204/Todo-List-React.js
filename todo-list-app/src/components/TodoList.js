@@ -14,6 +14,7 @@ function TodoList({
 	handleHomeTag,
 	homeInput,
 	workInput,
+	handleCompletedItem,
 }) {
 	return (
 		<StyledTodoList>
@@ -29,7 +30,11 @@ function TodoList({
 					workInput={workInput}
 				/>
 				{list.map(item => (
-					<TodoItem item={item} key={item.id} />
+					<TodoItem
+						handleCompletedItem={handleCompletedItem}
+						item={item}
+						key={item.id}
+					/>
 				))}
 			</div>
 		</StyledTodoList>

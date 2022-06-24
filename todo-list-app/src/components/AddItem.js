@@ -20,14 +20,23 @@ const StyledInput = styled.input`
 
 const StyledTagButton = styled(StyledTag)`
 	--tag-color-inactive: #a7a7a7;
-	--tag-color-active: #0059d6;
-	${props => {
-		if (props.Input) {
-			return `
-				color: var(--tag-color-active);
-				border-color: var(--tag-color-active);
+	--tag-color-home-active: #0059d6;
+	--tag-color-work-active: #1c9f11;
+	border: none;
+	${({ Input, children }) => {
+		if (Input) {
+			if (children === "home") {
+				return `
+				color: var(--tag-color-home-active);
+				border-color: var(--tag-color-home-active);
 				background-color: #e2eeff;
 			`;
+			} else {
+				return `
+				color: var(--tag-color-work-active);
+				border-color: var(--tag-color-work-active);
+				background-color: #e1ffde;`;
+			}
 		} else {
 			return `
 				color: var(--tag-color-inactive);

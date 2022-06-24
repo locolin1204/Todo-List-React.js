@@ -32,25 +32,41 @@ const StyledIconText = styled.div`
 `;
 
 const StyledTag = styled.button`
-	--tag-color: #0059d6;
-	color: var(--tag-color);
+	--home-tag-color: #0059d6;
+	--work-tag-color: #1c9f11;
 	background-color: #e2eeff;
 	font-size: 0.9rem;
 	padding: 0.4rem 1.3rem;
-	border: solid var(--tag-color) 1px;
+	border: solid 1px;
 	border-radius: 50rem;
 	margin-left: 1.3rem;
+
+	${({ home }) => {
+		if (home) {
+			return `
+				color: var(--home-tag-color);
+				border-color: var(--home-tag-color);
+				background-color: #e2eeff;
+			`;
+		} else {
+			return `
+				color: var(--work-tag-color);
+				border-color: var(--work-tag-color);
+				background-color: #e1ffde;
+			`;
+		}
+	}}
 `;
 
-function TodoItem({ item }) {
+function TodoItem({ item, handleCompletedItem }) {
 	return (
 		<StyledTodoItem>
 			<StyledIconText>
 				<StyledIcons>
-					<MdCheckBoxOutlineBlank />
+					<MdCheckBoxOutlineBlank onClick={() => handleCompletedItem()} />
 				</StyledIcons>
 				<StyledText> {item.text} </StyledText>
-				{item.home && <StyledTag>home</StyledTag>}
+				{item.home && <StyledTag home>home</StyledTag>}
 				{item.work && <StyledTag>work</StyledTag>}
 			</StyledIconText>
 			<StyledIcons>

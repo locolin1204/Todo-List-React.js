@@ -25,12 +25,13 @@ const originalTodoList = [
 		text: "Good Morning",
 		home: true,
 		work: false,
+		completed: false,
 	},
 	{
 		id: nanoid(),
 		text: "Good Night",
 		home: false,
-		work: true,
+		completed: false,
 	},
 ];
 
@@ -39,6 +40,7 @@ function App() {
 	const [textInput, setTextInput] = useState("");
 	const [homeInput, setHomeInput] = useState(false);
 	const [workInput, setWorkInput] = useState(false);
+	const [hasCompleted, setHasCompleted] = useState(false);
 
 	const handleTextInput = e => {
 		setTextInput(e.target.value);
@@ -50,6 +52,7 @@ function App() {
 			text: textInput,
 			home: homeInput,
 			work: workInput,
+			completed: false,
 		};
 		const newLists = [newItem, ...list];
 		setList(newLists);
@@ -66,6 +69,10 @@ function App() {
 		setWorkInput(!workInput);
 	};
 
+	const handleCompletedItem = () => {
+		setHasCompleted(true);
+	};
+
 	return (
 		<Main>
 			<Header></Header>
@@ -78,6 +85,7 @@ function App() {
 				handleWorkTag={handleWorkTag}
 				homeInput={homeInput}
 				workInput={workInput}
+				handleCompletedItem={handleCompletedItem}
 			/>
 		</Main>
 	);
