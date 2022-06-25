@@ -15,6 +15,7 @@ function TodoList({
 	homeInput,
 	workInput,
 	handleCompletedItem,
+	handleDeletedItem,
 }) {
 	return (
 		<StyledTodoList>
@@ -34,6 +35,7 @@ function TodoList({
 						handleCompletedItem={handleCompletedItem}
 						item={item}
 						key={item.id}
+						handleDeletedItem={handleDeletedItem}
 					/>
 				))}
 			</div>

@@ -58,7 +58,7 @@ const StyledTag = styled.button`
 	}}
 `;
 
-function TodoItem({ item, handleCompletedItem }) {
+function TodoItem({ item, handleCompletedItem, handleDeletedItem }) {
 	return (
 		<StyledTodoItem>
 			<StyledIconText>
@@ -70,7 +70,7 @@ function TodoItem({ item, handleCompletedItem }) {
 				{item.work && <StyledTag>work</StyledTag>}
 			</StyledIconText>
 			<StyledIcons>
-				<GoX />
+				<GoX onClick={() => handleDeletedItem(item.id)} />
 			</StyledIcons>
 		</StyledTodoItem>
 	);

@@ -1,0 +1,17 @@
+{
+	"originalTodoList": [
+		{
+			"id": null,
+			"text": "Good Morningg",
+			"home": true,
+			"work": false,
+			"completed": false
+		},
+		{
+			"id": null,
+			"text": "Good Night",
+			"home": false,
+			"completed": false
+		}
+	]
+}

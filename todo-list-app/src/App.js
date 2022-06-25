@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import TodoList from "./components/TodoList";
 import styled from "styled-components";
 import { nanoid } from "nanoid";
+import { IoConstructOutline } from "react-icons/io5";
 
 const Main = styled.div`
 	margin: 0;
@@ -19,21 +20,15 @@ const Main = styled.div`
 	margin-top: 5em;
 `;
 
-const originalTodoList = [
-	{
-		id: nanoid(),
-		text: "Good Morning",
-		home: true,
-		work: false,
-		completed: false,
-	},
-	{
-		id: nanoid(),
-		text: "Good Night",
-		home: false,
-		completed: false,
-	},
-];
+const jsonOriginalTodoListData = require("./data/data.json");
+
+const jsonOriginalTodoListObjectList =
+	jsonOriginalTodoListData["originalTodoList"];
+
+const originalTodoList = jsonOriginalTodoListObjectList.map(object => {
+	object.id = nanoid();
+	return object;
+});
 
 function App() {
 	const [list, setList] = useState(originalTodoList);
@@ -73,6 +68,11 @@ function App() {
 		setHasCompleted(true);
 	};
 
+	const handleDeletedItem = id => {
+		const newList = list.filter(item => item.id != id);
+		setList(newList);
+	};
+
 	return (
 		<Main>
 			<Header></Header>
@@ -86,6 +86,7 @@ function App() {
 				homeInput={homeInput}
 				workInput={workInput}
 				handleCompletedItem={handleCompletedItem}
+				handleDeletedItem={handleDeletedItem}
 			/>
 		</Main>
 	);
