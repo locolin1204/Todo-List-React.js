@@ -1,7 +1,10 @@
 import React from "react";
 import { IoCheckbox } from "react-icons/io5";
-import { MdCheckBoxOutlineBlank } from "react-icons/md";
-import { GoX } from "react-icons/go";
+import {
+	MdCheckBoxOutlineBlank as CheckBoxIcon,
+	MdModeEditOutline as EditIcon,
+} from "react-icons/md";
+import { GoX as CrossIcon } from "react-icons/go";
 
 import styled from "styled-components";
 import { IconContext } from "react-icons";
@@ -63,15 +66,20 @@ function TodoItem({ item, handleCompletedItem, handleDeletedItem }) {
 		<StyledTodoItem>
 			<StyledIconText>
 				<StyledIcons>
-					<MdCheckBoxOutlineBlank onClick={() => handleCompletedItem()} />
+					<CheckBoxIcon onClick={() => handleCompletedItem()} />
 				</StyledIcons>
 				<StyledText> {item.text} </StyledText>
 				{item.home && <StyledTag home>home</StyledTag>}
 				{item.work && <StyledTag>work</StyledTag>}
 			</StyledIconText>
-			<StyledIcons>
-				<GoX onClick={() => handleDeletedItem(item.id)} />
-			</StyledIcons>
+			<div>
+				<StyledIcons>
+					<EditIcon />
+				</StyledIcons>
+				<StyledIcons>
+					<CrossIcon onClick={() => handleDeletedItem(item.id)} />
+				</StyledIcons>
+			</div>
 		</StyledTodoItem>
 	);
 }

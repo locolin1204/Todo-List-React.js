@@ -5,6 +5,8 @@ import styled from "styled-components";
 
 const StyledTodoList = styled.div``;
 
+const StyledTodoHeader = styled.div``;
+
 function TodoList({
 	list,
 	handleTextInput,
@@ -19,26 +21,25 @@ function TodoList({
 }) {
 	return (
 		<StyledTodoList>
-			<div>
-				<AddItem
-					handleTextInput={handleTextInput}
-					textInput={textInput}
-					handleAddItem={handleAddItem}
-					g
-					handleHomeTag={handleHomeTag}
-					handleWorkTag={handleWorkTag}
-					homeInput={homeInput}
-					workInput={workInput}
+			<StyledTodoHeader>Todo</StyledTodoHeader>
+			<AddItem
+				handleTextInput={handleTextInput}
+				textInput={textInput}
+				handleAddItem={handleAddItem}
+				g
+				handleHomeTag={handleHomeTag}
+				handleWorkTag={handleWorkTag}
+				homeInput={homeInput}
+				workInput={workInput}
+			/>
+			{list.map(item => (
+				<TodoItem
+					handleCompletedItem={handleCompletedItem}
+					item={item}
+					key={item.id}
+					handleDeletedItem={handleDeletedItem}
 				/>
-				{list.map(item => (
-					<TodoItem
-						handleCompletedItem={handleCompletedItem}
-						item={item}
-						key={item.id}
-						handleDeletedItem={handleDeletedItem}
-					/>
-				))}
-			</div>
+			))}
 		</StyledTodoList>
 	);
 }

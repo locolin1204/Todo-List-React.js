@@ -4,6 +4,7 @@ import TodoList from "./components/TodoList";
 import styled from "styled-components";
 import { nanoid } from "nanoid";
 import { IoConstructOutline } from "react-icons/io5";
+import CompletedList from "./components/CompletedList";
 
 const Main = styled.div`
 	margin: 0;
@@ -88,6 +89,7 @@ function App() {
 				handleCompletedItem={handleCompletedItem}
 				handleDeletedItem={handleDeletedItem}
 			/>
+			<CompletedList />
 		</Main>
 	);
 }
