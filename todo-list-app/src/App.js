@@ -1,10 +1,10 @@
 import Header from "./components/Header";
 import React, { useState } from "react";
-import TodoList from "./components/TodoList";
+import TodoList from "./components/todoList/TodoList";
 import styled from "styled-components";
 import { nanoid } from "nanoid";
 import { IoConstructOutline } from "react-icons/io5";
-import CompletedList from "./components/CompletedList";
+import CompletedList from "./components/completedList/CompletedList";
 
 const Main = styled.div`
 	margin: 0;
@@ -21,12 +21,18 @@ const Main = styled.div`
 	margin-top: 5em;
 `;
 
-const jsonOriginalTodoListData = require("./data/data.json");
+const jsonData = require("./data/data.json");
 
-const jsonOriginalTodoListObjectList =
-	jsonOriginalTodoListData["originalTodoList"];
+const jsonOriginalTodoListObjectList = jsonData["originalTodoList"];
 
 const originalTodoList = jsonOriginalTodoListObjectList.map(object => {
+	object.id = nanoid();
+	return object;
+});
+
+const jsonOriginalCompletedListData = jsonData["originalCompletedList"];
+
+const originalCompletedList = jsonOriginalTodoListObjectList.map(object => {
 	object.id = nanoid();
 	return object;
 });
@@ -36,7 +42,9 @@ function App() {
 	const [textInput, setTextInput] = useState("");
 	const [homeInput, setHomeInput] = useState(false);
 	const [workInput, setWorkInput] = useState(false);
-	const [hasCompleted, setHasCompleted] = useState(false);
+	const [completedList, setCompletedList] = useState(
+		jsonOriginalCompletedListData
+	);
 
 	const handleTextInput = e => {
 		setTextInput(e.target.value);
@@ -65,12 +73,15 @@ function App() {
 		setWorkInput(!workInput);
 	};
 
-	const handleCompletedItem = () => {
-		setHasCompleted(true);
+	const handleCompletedItem = id => {
+		const newCompletedItem = list.find(item => item.id === id);
+		newCompletedItem.completed = true;
+		setCompletedList([newCompletedItem, ...completedList]);
+		handleDeletedItem(id);
 	};
 
 	const handleDeletedItem = id => {
-		const newList = list.filter(item => item.id != id);
+		const newList = list.filter(item => item.id !== id);
 		setList(newList);
 	};
 
@@ -89,7 +100,7 @@ function App() {
 				handleCompletedItem={handleCompletedItem}
 				handleDeletedItem={handleDeletedItem}
 			/>
-			<CompletedList />
+			<CompletedList completedList={completedList} />
 		</Main>
 	);
 }

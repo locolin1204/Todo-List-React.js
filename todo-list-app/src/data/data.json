@@ -2,7 +2,7 @@
 	"originalTodoList": [
 		{
 			"id": null,
-			"text": "Good Morningg",
+			"text": "Good Morning",
 			"home": true,
 			"work": false,
 			"completed": false
@@ -11,7 +11,24 @@
 			"id": null,
 			"text": "Good Night",
 			"home": false,
+			"work": false,
 			"completed": false
+		}
+	],
+	"originalCompletedList": [
+		{
+			"id": null,
+			"text": "Testing",
+			"home": true,
+			"work": false,
+			"completed": true
+		},
+		{
+			"id": null,
+			"text": "Compelete React.js",
+			"home": true,
+			"work": true,
+			"completed": true
 		}
 	]
 }

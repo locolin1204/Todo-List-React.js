@@ -1,13 +1,13 @@
 import React from "react";
-import { IoCheckbox } from "react-icons/io5";
+import styled from "styled-components";
+import { IoCheckbox as CompletedCheckBoxIcon} from "react-icons/io5";
 import {
-	MdCheckBoxOutlineBlank as CheckBoxIcon,
+	MdCheckBoxOutlineBlank as EmptyCheckBoxIcon,
 	MdModeEditOutline as EditIcon,
 } from "react-icons/md";
 import { GoX as CrossIcon } from "react-icons/go";
-
-import styled from "styled-components";
 import { IconContext } from "react-icons";
+
 
 const StyledTodoItem = styled.div`
 	display: flex;
@@ -24,7 +24,7 @@ const Icons = ({ className, children }) => (
 	<IconContext.Provider value={{ className }}>{children}</IconContext.Provider>
 );
 
-export const StyledIcons = styled(Icons)`
+const StyledIcons = styled(Icons)`
 	padding: 0.5rem;
 	cursor: pointer;
 `;
@@ -66,7 +66,13 @@ function TodoItem({ item, handleCompletedItem, handleDeletedItem }) {
 		<StyledTodoItem>
 			<StyledIconText>
 				<StyledIcons>
-					<CheckBoxIcon onClick={() => handleCompletedItem()} />
+					{item.completed ? (
+						<CompletedCheckBoxIcon />
+					) : (
+						<EmptyCheckBoxIcon onClick={() => handleCompletedItem(item.id)} />
+					)}
+					{/* <EmptyCheckBoxIcon onClick={() => handleCompletedItem(item.id)} />
+					<CompletedCheckBoxIcon /> */}
 				</StyledIcons>
 				<StyledText> {item.text} </StyledText>
 				{item.home && <StyledTag home>home</StyledTag>}
@@ -85,4 +91,4 @@ function TodoItem({ item, handleCompletedItem, handleDeletedItem }) {
 }
 
 export default TodoItem;
-export { StyledTodoItem, StyledIconText, StyledTag };
+export { StyledTodoItem, StyledIconText, StyledTag, StyledIcons };

@@ -1,10 +1,11 @@
 import React from "react";
 import styled from "styled-components";
 import { TiTick } from "react-icons/ti";
+import { IoIosAddCircle } from "react-icons/io";
 import { StyledIcons, StyledTodoItem, StyledTag } from "./TodoItem";
 
 const StyledTick = styled(StyledIcons)`
-	font-size: 1.4rem;
+	font-size: inherit;
 `;
 
 const StyledInput = styled.input`
@@ -47,6 +48,11 @@ const StyledTagButton = styled(StyledTag)`
 	}}
 `;
 
+const StyledTagIconsContainer = styled.div`
+display: flex;
+align-items: center;
+`;
+
 function AddItem({
 	handleTextInput,
 	handleAddItem,
@@ -69,19 +75,21 @@ function AddItem({
 					}
 				}}
 			/>
-			<StyledTagButton onClick={() => handleHomeTag()} Input={homeInput}>
-				home
-			</StyledTagButton>
-			<StyledTagButton onClick={() => handleWorkTag()} Input={workInput}>
-				work
-			</StyledTagButton>
-			<StyledTick>
-				<TiTick
-					onClick={() => {
-						textInput && handleAddItem();
-					}}
-				/>
-			</StyledTick>
+			<StyledTagIconsContainer>
+				<StyledTagButton onClick={() => handleHomeTag()} Input={homeInput}>
+					home
+				</StyledTagButton>
+				<StyledTagButton onClick={() => handleWorkTag()} Input={workInput}>
+					work
+				</StyledTagButton>
+				<StyledTick>
+					<TiTick
+						onClick={() => {
+							textInput && handleAddItem();
+						}}
+					/>
+				</StyledTick>
+			</StyledTagIconsContainer>
 		</StyledTodoItem>
 	);
 }
