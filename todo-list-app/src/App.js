@@ -4,44 +4,49 @@ import TodoList from "./components/todoList/TodoList";
 import styled from "styled-components";
 import { nanoid } from "nanoid";
 import CompletedList from "./components/completedList/CompletedList";
+import NavBar from "./components/NavigationBar";
+import { originalCompletedList, originalTodoList } from "./data/processData";
 
 const Main = styled.div`
 	margin: 0;
 	font-family: "Inter", sans-serif;
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
-	display: block;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
 	margin-left: auto;
 	margin-right: auto;
-	max-width: 700px;
+	max-width: 900px;
 	/* box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px; */
 	box-shadow: rgba(97, 184, 250, 0.2) 0px 7px 29px 0px;
-	padding: 60px;
 	margin-top: 5em;
 `;
 
-const jsonData = require("./data/data.json");
-
-const jsonOriginalTodoListObjectList = jsonData["originalTodoList"];
-
-const originalTodoList = jsonOriginalTodoListObjectList.map(object => {
-	object.id = nanoid();
-	return object;
-});
-
-const jsonOriginalCompletedListData = jsonData["originalCompletedList"];
-
-const originalCompletedList = jsonOriginalCompletedListData.map(object => {
-	object.id = nanoid();
-	return object;
-});
+const Container = styled.div`
+	padding: 60px;
+	padding-top: 20px;
+	/* max-width: 700px; */
+`;
 
 function App() {
 	const [list, setList] = useState(originalTodoList);
-	const [textInput, setTextInput] = useState("");
-	const [homeInput, setHomeInput] = useState(false);
-	const [workInput, setWorkInput] = useState(false);
 	const [completedList, setCompletedList] = useState(originalCompletedList);
+	const [textInput, setTextInput] = useState("");
+	const [tagInput, setTagInput] = useState({ home: false, work: false });
+	const [displayList, setDisplayList] = useState(originalTodoList);
+	const [displayCompleteList, setDisplayCompleteList] = useState(
+		originalCompletedList
+	);
+
+
+	useEffect(() => {
+		setDisplayList(list);
+	}, [list]);
+
+	useEffect(() => {
+		setDisplayCompleteList(completedList);
+	}, [completedList]);
 
 	const handleTextInput = e => {
 		setTextInput(e.target.value);
@@ -51,23 +56,22 @@ function App() {
 		const newItem = {
 			id: nanoid(),
 			text: textInput,
-			home: homeInput,
-			work: workInput,
+			home: tagInput.home,
+			work: tagInput.work,
 			completed: false,
 		};
 		const newLists = [newItem, ...list];
 		setList(newLists);
 		setTextInput("");
-		setHomeInput(false);
-		setWorkInput(false);
+		setTagInput({ home: false, work: false });
 	};
 
 	const handleHomeTag = () => {
-		setHomeInput(!homeInput);
+		setTagInput({...tagInput, "home": !tagInput.home});
 	};
 
 	const handleWorkTag = () => {
-		setWorkInput(!workInput);
+		setTagInput({ ...tagInput, work: !tagInput.work });
 	};
 
 	const handleCompletedItem = (id, isCompleted) => {
@@ -93,37 +97,55 @@ function App() {
 			const newList = list.filter(item => item.id !== id);
 			setList(newList);
 		}
+		console.log(list);
 	};
 
-	const handleEditItem = (id) => {
+	const handleEditItem = id => {};
 
-	}
+	const handleNavBar = type => {
+		if (type === null) {
+			setDisplayList(list);
+			setDisplayCompleteList(completedList);
+		} else {
+			const newList = list.filter(item => item[type] === true);
+			setDisplayList(newList);
+			const newCompletedList = completedList.filter(
+				item => item.completed === true && item[type] === true
+			);
+			setDisplayCompleteList(newCompletedList);
+		}
+	};
+
+	const todoListChildrenObject = {
+		handleTextInput,
+		handleAddItem,
+		textInput,
+		handleHomeTag,
+		handleWorkTag,
+		tagInput,
+		handleCompletedItem,
+		handleDeletedItem,
+		handleEditItem,
+	};
+
+	const completedListChildrenObject = {
+		handleCompletedItem,
+		handleDeletedItem,
+		handleEditItem,
+	};
 
 	return (
-		<div>
-			<Main>
+		<Main>
+			<NavBar handleNavBar={handleNavBar} />
+			<Container>
 				<Header></Header>
-				<TodoList
-					list={list}
-					handleTextInput={handleTextInput}
-					handleAddItem={handleAddItem}
-					textInput={textInput}
-					handleHomeTag={handleHomeTag}
-					handleWorkTag={handleWorkTag}
-					homeInput={homeInput}
-					workInput={workInput}
-					handleCompletedItem={handleCompletedItem}
-					handleDeletedItem={handleDeletedItem}
-					handleEditItem={handleEditItem}
-				/>
+				<TodoList list={displayList} data={todoListChildrenObject} />
 				<CompletedList
-					completedList={completedList}
-					handleCompletedItem={handleCompletedItem}
-					handleDeletedItem={handleDeletedItem}
-					handleEditItem={handleEditItem}
+					completedList={displayCompleteList}
+					data={completedListChildrenObject}
 				/>
-			</Main>
-		</div>
+			</Container>
+		</Main>
 	);
 }
 

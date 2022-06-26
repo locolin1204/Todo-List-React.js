@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { TiTick } from "react-icons/ti";
-import { IoIosAddCircle } from "react-icons/io";
+import { MdAdd as AddIcon } from "react-icons/md";
 import { StyledIcons, StyledTodoItem, StyledTag } from "./TodoItem";
 
 const StyledTick = styled(StyledIcons)`
@@ -49,43 +49,41 @@ const StyledTagButton = styled(StyledTag)`
 `;
 
 const StyledTagIconsContainer = styled.div`
-display: flex;
-align-items: center;
+	display: flex;
+	align-items: center;
 `;
 
-function AddItem({
-	handleTextInput,
-	handleAddItem,
-	textInput,
-	handleWorkTag,
-	handleHomeTag,
-	homeInput,
-	workInput,
-}) {
+function AddItem({ data }) {
 	return (
 		<StyledTodoItem>
 			<StyledInput
 				type="text"
 				placeholder="Type here..."
-				onChange={handleTextInput}
-				value={textInput}
+				onChange={data.handleTextInput}
+				value={data.textInput}
 				onKeyPress={e => {
 					if (e.key === "Enter") {
-						textInput && handleAddItem();
+						data.textInput && data.handleAddItem();
 					}
 				}}
 			/>
 			<StyledTagIconsContainer>
-				<StyledTagButton onClick={() => handleHomeTag()} Input={homeInput}>
+				<StyledTagButton
+					onClick={() => data.handleHomeTag()}
+					Input={data.tagInput.home}
+				>
 					home
 				</StyledTagButton>
-				<StyledTagButton onClick={() => handleWorkTag()} Input={workInput}>
+				<StyledTagButton
+					onClick={() => data.handleWorkTag()}
+					Input={data.tagInput.work}
+				>
 					work
 				</StyledTagButton>
 				<StyledTick>
-					<TiTick
+					<AddIcon
 						onClick={() => {
-							textInput && handleAddItem();
+							data.textInput && data.handleAddItem();
 						}}
 					/>
 				</StyledTick>

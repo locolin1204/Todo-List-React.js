@@ -19,7 +19,7 @@ const StyledTodoItem = styled.div`
 
 const StyledText = styled.div``;
 
-const Icons = ({ className, children, onClickFunction }) => (
+const Icons = ({ className, children}) => (
 	<IconContext.Provider value={{ className }}>{children}</IconContext.Provider>
 );
 
@@ -62,8 +62,8 @@ const StyledTag = styled.button`
 
 function TodoItem({
 	item,
-	handleCompletedItem,
 	handleDeletedItem,
+	handleCompletedItem,
 	handleEditItem,
 }) {
 	return (
@@ -80,7 +80,7 @@ function TodoItem({
 			</StyledIconText>
 			<div>
 				<StyledIcons>
-					<EditIcon onCLick={() => handleEditItem(item.id)} />
+					<EditIcon onClick={() => handleEditItem(item.id)} />
 				</StyledIcons>
 				<StyledIcons>
 					<CrossIcon
