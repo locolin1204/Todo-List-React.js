@@ -1,13 +1,12 @@
 import React from "react";
 import styled from "styled-components";
-import { IoCheckbox as CompletedCheckBoxIcon} from "react-icons/io5";
+import { IoCheckbox as CompletedCheckBoxIcon } from "react-icons/io5";
 import {
 	MdCheckBoxOutlineBlank as EmptyCheckBoxIcon,
 	MdModeEditOutline as EditIcon,
 } from "react-icons/md";
 import { GoX as CrossIcon } from "react-icons/go";
 import { IconContext } from "react-icons";
-
 
 const StyledTodoItem = styled.div`
 	display: flex;
@@ -20,7 +19,7 @@ const StyledTodoItem = styled.div`
 
 const StyledText = styled.div``;
 
-const Icons = ({ className, children }) => (
+const Icons = ({ className, children, onClickFunction }) => (
 	<IconContext.Provider value={{ className }}>{children}</IconContext.Provider>
 );
 
@@ -66,13 +65,9 @@ function TodoItem({ item, handleCompletedItem, handleDeletedItem }) {
 		<StyledTodoItem>
 			<StyledIconText>
 				<StyledIcons>
-					{item.completed ? (
-						<CompletedCheckBoxIcon />
-					) : (
-						<EmptyCheckBoxIcon onClick={() => handleCompletedItem(item.id)} />
-					)}
-					{/* <EmptyCheckBoxIcon onClick={() => handleCompletedItem(item.id)} />
-					<CompletedCheckBoxIcon /> */}
+					<div onClick={() => handleCompletedItem(item.id, item.completed)}>
+						{item.completed ? <CompletedCheckBoxIcon /> : <EmptyCheckBoxIcon />}
+					</div>
 				</StyledIcons>
 				<StyledText> {item.text} </StyledText>
 				{item.home && <StyledTag home>home</StyledTag>}
@@ -83,7 +78,9 @@ function TodoItem({ item, handleCompletedItem, handleDeletedItem }) {
 					<EditIcon />
 				</StyledIcons>
 				<StyledIcons>
-					<CrossIcon onClick={() => handleDeletedItem(item.id)} />
+					<CrossIcon
+						onClick={() => handleDeletedItem(item.id, item.completed)}
+					/>
 				</StyledIcons>
 			</div>
 		</StyledTodoItem>

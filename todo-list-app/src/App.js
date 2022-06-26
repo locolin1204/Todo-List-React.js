@@ -32,7 +32,7 @@ const originalTodoList = jsonOriginalTodoListObjectList.map(object => {
 
 const jsonOriginalCompletedListData = jsonData["originalCompletedList"];
 
-const originalCompletedList = jsonOriginalTodoListObjectList.map(object => {
+const originalCompletedList = jsonOriginalCompletedListData.map(object => {
 	object.id = nanoid();
 	return object;
 });
@@ -42,9 +42,7 @@ function App() {
 	const [textInput, setTextInput] = useState("");
 	const [homeInput, setHomeInput] = useState(false);
 	const [workInput, setWorkInput] = useState(false);
-	const [completedList, setCompletedList] = useState(
-		jsonOriginalCompletedListData
-	);
+	const [completedList, setCompletedList] = useState(originalCompletedList);
 
 	const handleTextInput = e => {
 		setTextInput(e.target.value);
@@ -73,16 +71,29 @@ function App() {
 		setWorkInput(!workInput);
 	};
 
-	const handleCompletedItem = id => {
-		const newCompletedItem = list.find(item => item.id === id);
-		newCompletedItem.completed = true;
-		setCompletedList([newCompletedItem, ...completedList]);
-		handleDeletedItem(id);
+	const handleCompletedItem = (id, isCompleted) => {
+		if (isCompleted) {
+			const newListItem = completedList.find(item => item.id === id);
+			newListItem.completed = false;
+			setList([newListItem, ...list]);
+			handleDeletedItem(id, isCompleted);
+		} else {
+			const newCompletedItem = list.find(item => item.id === id);
+			newCompletedItem.completed = true;
+			setCompletedList([newCompletedItem, ...completedList]);
+			handleDeletedItem(id, isCompleted);
+		}
 	};
 
-	const handleDeletedItem = id => {
-		const newList = list.filter(item => item.id !== id);
-		setList(newList);
+	const handleDeletedItem = (id, isCompleted) => {
+		if (isCompleted) {
+			// delete from completed list
+			const newCompletedList = completedList.filter(item => item.id !== id);
+			setCompletedList(newCompletedList);
+		} else {
+			const newList = list.filter(item => item.id !== id);
+			setList(newList);
+		}
 	};
 
 	return (
@@ -100,7 +111,11 @@ function App() {
 				handleCompletedItem={handleCompletedItem}
 				handleDeletedItem={handleDeletedItem}
 			/>
-			<CompletedList completedList={completedList} />
+			<CompletedList
+				completedList={completedList}
+				handleCompletedItem={handleCompletedItem}
+				handleDeletedItem={handleDeletedItem}
+			/>
 		</Main>
 	);
 }
