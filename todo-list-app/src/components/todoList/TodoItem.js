@@ -80,7 +80,7 @@ function TodoItem({
 			</StyledIconText>
 			<div>
 				<StyledIcons>
-					<EditIcon onCLick={() => handleEditItem(item.id)} />
+					<EditIcon onClick={() => handleEditItem(item.id)} />
 				</StyledIcons>
 				<StyledIcons>
 					<CrossIcon
