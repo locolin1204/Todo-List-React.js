@@ -13,6 +13,7 @@ const CompletedList = ({
 	completedList,
 	handleCompletedItem,
 	handleDeletedItem,
+	handleEditItem,
 }) => {
 	return (
 		<div>
@@ -21,9 +22,10 @@ const CompletedList = ({
 				<CompletedTodoItem key={index}>
 					<TodoItem
 						handleCompletedItem={handleCompletedItem}
+						handleDeletedItem={handleDeletedItem}
+						handleEditItem={handleEditItem}
 						item={item}
 						key={index}
-						handleDeletedItem={handleDeletedItem}
 					/>
 				</CompletedTodoItem>
 			))}

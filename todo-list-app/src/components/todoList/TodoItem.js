@@ -60,7 +60,12 @@ const StyledTag = styled.button`
 	}}
 `;
 
-function TodoItem({ item, handleCompletedItem, handleDeletedItem }) {
+function TodoItem({
+	item,
+	handleCompletedItem,
+	handleDeletedItem,
+	handleEditItem,
+}) {
 	return (
 		<StyledTodoItem>
 			<StyledIconText>
@@ -75,7 +80,7 @@ function TodoItem({ item, handleCompletedItem, handleDeletedItem }) {
 			</StyledIconText>
 			<div>
 				<StyledIcons>
-					<EditIcon />
+					<EditIcon onCLick={() => handleEditItem(item.id)} />
 				</StyledIcons>
 				<StyledIcons>
 					<CrossIcon

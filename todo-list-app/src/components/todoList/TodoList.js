@@ -18,26 +18,27 @@ function TodoList({
 	workInput,
 	handleCompletedItem,
 	handleDeletedItem,
+	handleEditItem,
 }) {
 	return (
 		<StyledTodoList>
 			<StyledTodoHeader>Todo</StyledTodoHeader>
 			<AddItem
 				handleTextInput={handleTextInput}
-				textInput={textInput}
 				handleAddItem={handleAddItem}
-				g
 				handleHomeTag={handleHomeTag}
 				handleWorkTag={handleWorkTag}
+				textInput={textInput}
 				homeInput={homeInput}
 				workInput={workInput}
 			/>
 			{list.map(item => (
 				<TodoItem
 					handleCompletedItem={handleCompletedItem}
+					handleDeletedItem={handleDeletedItem}
+					handleEditItem={handleEditItem}
 					item={item}
 					key={item.id}
-					handleDeletedItem={handleDeletedItem}
 				/>
 			))}
 		</StyledTodoList>

@@ -1,9 +1,8 @@
 import Header from "./components/Header";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import TodoList from "./components/todoList/TodoList";
 import styled from "styled-components";
 import { nanoid } from "nanoid";
-import { IoConstructOutline } from "react-icons/io5";
 import CompletedList from "./components/completedList/CompletedList";
 
 const Main = styled.div`
@@ -96,27 +95,35 @@ function App() {
 		}
 	};
 
+	const handleEditItem = (id) => {
+
+	}
+
 	return (
-		<Main>
-			<Header></Header>
-			<TodoList
-				list={list}
-				handleTextInput={handleTextInput}
-				handleAddItem={handleAddItem}
-				textInput={textInput}
-				handleHomeTag={handleHomeTag}
-				handleWorkTag={handleWorkTag}
-				homeInput={homeInput}
-				workInput={workInput}
-				handleCompletedItem={handleCompletedItem}
-				handleDeletedItem={handleDeletedItem}
-			/>
-			<CompletedList
-				completedList={completedList}
-				handleCompletedItem={handleCompletedItem}
-				handleDeletedItem={handleDeletedItem}
-			/>
-		</Main>
+		<div>
+			<Main>
+				<Header></Header>
+				<TodoList
+					list={list}
+					handleTextInput={handleTextInput}
+					handleAddItem={handleAddItem}
+					textInput={textInput}
+					handleHomeTag={handleHomeTag}
+					handleWorkTag={handleWorkTag}
+					homeInput={homeInput}
+					workInput={workInput}
+					handleCompletedItem={handleCompletedItem}
+					handleDeletedItem={handleDeletedItem}
+					handleEditItem={handleEditItem}
+				/>
+				<CompletedList
+					completedList={completedList}
+					handleCompletedItem={handleCompletedItem}
+					handleDeletedItem={handleDeletedItem}
+					handleEditItem={handleEditItem}
+				/>
+			</Main>
+		</div>
 	);
 }
 
