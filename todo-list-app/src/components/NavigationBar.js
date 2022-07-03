@@ -1,11 +1,11 @@
-import React from 'react';
-import styled from "styled-components"
+import React from "react";
+import styled from "styled-components";
 
 const StyledNavBar = styled.nav`
 	margin: 10;
 `;
 
-const NavItem = styled.button`
+const StyledNavItem = styled.button`
 	&:focus {
 		outline: none;
 	}
@@ -38,13 +38,13 @@ function NavBar({ handleNavBar }) {
 		<div>
 			<StyledNavBar>
 				{navBarList.map(item => (
-					<NavItem
+					<StyledNavItem
 						onClick={() => {
 							handleNavBar(item.action);
 						}}
 					>
-                    {item.title}
-                    </NavItem>
+						{item.title}
+					</StyledNavItem>
 				))}
 			</StyledNavBar>
 		</div>

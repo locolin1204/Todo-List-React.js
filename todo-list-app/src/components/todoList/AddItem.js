@@ -1,12 +1,7 @@
 import React from "react";
+import { StyledTodoItem } from "./TodoItem";
 import styled from "styled-components";
-import { TiTick } from "react-icons/ti";
-import { MdAdd as AddIcon } from "react-icons/md";
-import { StyledIcons, StyledTodoItem, StyledTag } from "./TodoItem";
-
-const StyledTick = styled(StyledIcons)`
-	font-size: inherit;
-`;
+import AddItemTagIcons from "./components/AddItemTagIcons";
 
 const StyledInput = styled.input`
 	&:focus {
@@ -19,75 +14,40 @@ const StyledInput = styled.input`
 	margin-left: 2rem;
 `;
 
-const StyledTagButton = styled(StyledTag)`
-	--tag-color-inactive: #a7a7a7;
-	--tag-color-home-active: #0059d6;
-	--tag-color-work-active: #1c9f11;
-	border: none;
-	${({ Input, children }) => {
-		if (Input) {
-			if (children === "home") {
-				return `
-				color: var(--tag-color-home-active);
-				border-color: var(--tag-color-home-active);
-				background-color: #e2eeff;
-			`;
-			} else {
-				return `
-				color: var(--tag-color-work-active);
-				border-color: var(--tag-color-work-active);
-				background-color: #e1ffde;`;
-			}
-		} else {
-			return `
-				color: var(--tag-color-inactive);
-				border-color: var(--tag-color-inactive);
-				background-color: #f9f9f9;
-			`;
-		}
-	}}
-`;
-
-const StyledTagIconsContainer = styled.div`
-	display: flex;
-	align-items: center;
-`;
-
 function AddItem({ data }) {
+	const { tagInput, textInput, handleHomeTag, handleWorkTag, handleAddItem } = data;
+
+	const iconsChildrenObject = {
+		tagInput,
+		textInput,
+		handleHomeTag,
+		handleWorkTag,
+		handleAddItem,
+	};
+
+	const itemInputRef = React.useRef(null);
+
+	React.useEffect(() => {
+		itemInputRef.current.focus();
+	});
+
 	return (
 		<StyledTodoItem>
 			<StyledInput
+				ref={itemInputRef}
+				readOnly={data.textInput.readOnly}
 				type="text"
 				placeholder="Type here..."
 				onChange={data.handleTextInput}
-				value={data.textInput}
+				value={data.textInput.text}
 				onKeyPress={e => {
 					if (e.key === "Enter") {
-						data.textInput && data.handleAddItem();
+						data.textInput.text && data.handleAddItem();
 					}
 				}}
 			/>
-			<StyledTagIconsContainer>
-				<StyledTagButton
-					onClick={() => data.handleHomeTag()}
-					Input={data.tagInput.home}
-				>
-					home
-				</StyledTagButton>
-				<StyledTagButton
-					onClick={() => data.handleWorkTag()}
-					Input={data.tagInput.work}
-				>
-					work
-				</StyledTagButton>
-				<StyledTick>
-					<AddIcon
-						onClick={() => {
-							data.textInput && data.handleAddItem();
-						}}
-					/>
-				</StyledTick>
-			</StyledTagIconsContainer>
+
+			<AddItemTagIcons data={iconsChildrenObject} />
 		</StyledTodoItem>
 	);
 }

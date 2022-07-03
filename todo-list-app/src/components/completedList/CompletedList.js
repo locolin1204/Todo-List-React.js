@@ -1,6 +1,7 @@
 import styled from "styled-components";
-import TodoItem from "../todoList/TodoItem";
-import { StyledTodoHeader } from "../todoList/TodoList";
+import TodoItem from "../TodoList/TodoItem";
+import { StyledTodoHeader } from "../TodoList/TodoList";
+import { AnimatePresence, motion } from "framer-motion";
 
 const StyledCompletedHeader = styled(StyledTodoHeader)`
 	margin-top: 1.3rem;
@@ -14,17 +15,42 @@ const CompletedList = ({ completedList, data }) => {
 	return (
 		<div>
 			<StyledCompletedHeader>Completed</StyledCompletedHeader>
-			{completedList.map((item, index) => (
-				<CompletedTodoItem key={index}>
-					<TodoItem
-						handleCompletedItem={data.handleCompletedItem}
-						handleDeletedItem={data.handleDeletedItem}
-						handleEditItem={data.handleEditItem}
-						item={item}
-						key={index}
-					/>
-				</CompletedTodoItem>
-			))}
+			<AnimatePresence>
+				{completedList.map((item, index) => (
+					<motion.div
+						variants={{
+							hidden: {
+								opacity: 0,
+								y: 25 * index,
+							},
+							visible: i => ({
+								opacity: 1,
+								y: 0,
+								transition: {
+									type: "spring",
+									delay: i * 0.05,
+								},
+							}),
+							removed: {
+								opacity: 0,
+							},
+						}}
+						initial="hidden"
+						animate="visible"
+						custom={index}
+					>
+						<CompletedTodoItem key={index}>
+							<TodoItem
+								key={index}
+								handleCompletedItem={data.handleCompletedItem}
+								handleDeletedItem={data.handleDeletedItem}
+								handleEditItem={data.handleEditItem}
+								item={item}
+							/>
+						</CompletedTodoItem>
+					</motion.div>
+				))}
+			</AnimatePresence>
 		</div>
 	);
 };

@@ -1,11 +1,11 @@
 import Header from "./components/Header";
 import React, { useState, useEffect } from "react";
-import TodoList from "./components/todoList/TodoList";
+import TodoList from "./components/TodoList/TodoList";
 import styled from "styled-components";
 import { nanoid } from "nanoid";
-import CompletedList from "./components/completedList/CompletedList";
+import CompletedList from "./components/CompletedList/CompletedList";
 import NavBar from "./components/NavigationBar";
-import { originalCompletedList, originalTodoList } from "./data/processData";
+import { originalTodoList } from "./data/processData";
 
 const Main = styled.div`
 	margin: 0;
@@ -31,89 +31,79 @@ const Container = styled.div`
 
 function App() {
 	const [list, setList] = useState(originalTodoList);
-	const [completedList, setCompletedList] = useState(originalCompletedList);
-	const [textInput, setTextInput] = useState("");
+	const [textInput, setTextInput] = useState({ text: "", readOnly: false });
 	const [tagInput, setTagInput] = useState({ home: false, work: false });
-	const [displayList, setDisplayList] = useState(originalTodoList);
-	const [displayCompleteList, setDisplayCompleteList] = useState(
-		originalCompletedList
-	);
 
+	const completedList = list.filter((item)=>item.completed === true);
+	const uncompletedList = list.filter(item => item.completed === false);
 
-	useEffect(() => {
-		setDisplayList(list);
-	}, [list]);
+	// useEffect(() => {
+	// 	setDisplayList(list);
+	// }, [list]);
 
-	useEffect(() => {
-		setDisplayCompleteList(completedList);
-	}, [completedList]);
+	// useEffect(() => {
+	// 	setDisplayCompleteList(completedList);
+	// }, [completedList]);
+
 
 	const handleTextInput = e => {
-		setTextInput(e.target.value);
+		setTextInput({...textInput ,text: e.target.value});
 	};
 
 	const handleAddItem = () => {
 		const newItem = {
 			id: nanoid(),
-			text: textInput,
+			text: textInput.text,
 			home: tagInput.home,
 			work: tagInput.work,
 			completed: false,
 		};
 		const newLists = [newItem, ...list];
 		setList(newLists);
-		setTextInput("");
+		setTextInput({ ...textInput, text: ""});
 		setTagInput({ home: false, work: false });
 	};
 
-	const handleHomeTag = () => {
-		setTagInput({...tagInput, "home": !tagInput.home});
+	const handleHomeTag = (id) => {
+		setTagInput({ ...tagInput, home: !tagInput.home });
 	};
 
-	const handleWorkTag = () => {
+
+	const handleWorkTag = (id) => {
 		setTagInput({ ...tagInput, work: !tagInput.work });
 	};
 
-	const handleCompletedItem = (id, isCompleted) => {
-		if (isCompleted) {
-			const newListItem = completedList.find(item => item.id === id);
-			newListItem.completed = false;
-			setList([newListItem, ...list]);
-			handleDeletedItem(id, isCompleted);
-		} else {
-			const newCompletedItem = list.find(item => item.id === id);
-			newCompletedItem.completed = true;
-			setCompletedList([newCompletedItem, ...completedList]);
-			handleDeletedItem(id, isCompleted);
+const handleCompletedItem = (id) => {
+	const newList = list.map(item => {
+		if (item.id === id) {
+			item.completed = !item.completed;
 		}
-	};
+		return item;
+	});
+	setList(newList);
+};
 
-	const handleDeletedItem = (id, isCompleted) => {
-		if (isCompleted) {
-			// delete from completed list
-			const newCompletedList = completedList.filter(item => item.id !== id);
-			setCompletedList(newCompletedList);
-		} else {
+	const handleDeletedItem = (id) => {
 			const newList = list.filter(item => item.id !== id);
 			setList(newList);
-		}
-		console.log(list);
 	};
 
-	const handleEditItem = id => {};
+	const handleEditItem = id => {
+
+	};
 
 	const handleNavBar = type => {
-		if (type === null) {
-			setDisplayList(list);
-			setDisplayCompleteList(completedList);
-		} else {
-			const newList = list.filter(item => item[type] === true);
-			setDisplayList(newList);
-			const newCompletedList = completedList.filter(
-				item => item.completed === true && item[type] === true
-			);
-			setDisplayCompleteList(newCompletedList);
-		}
+		// if (type === null) {
+		// 	setDisplayList(list);
+		// 	setDisplayCompleteList(completedList);
+		// } else {
+		// 	const newList = list.filter(item => item[type] === true);
+		// 	setDisplayList(newList);
+		// 	const newCompletedList = completedList.filter(
+		// 		item => item.completed === true && item[type] === true
+		// 	);
+		// 	setDisplayCompleteList(newCompletedList);
+		// }
 	};
 
 	const todoListChildrenObject = {
@@ -139,9 +129,9 @@ function App() {
 			<NavBar handleNavBar={handleNavBar} />
 			<Container>
 				<Header></Header>
-				<TodoList list={displayList} data={todoListChildrenObject} />
+				<TodoList list={uncompletedList} data={todoListChildrenObject} />
 				<CompletedList
-					completedList={displayCompleteList}
+					completedList={completedList}
 					data={completedListChildrenObject}
 				/>
 			</Container>

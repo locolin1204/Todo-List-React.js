@@ -13,9 +13,7 @@
 			"home": false,
 			"work": true,
 			"completed": false
-		}
-	],
-	"originalCompletedList": [
+		},
 		{
 			"id": null,
 			"text": "Testing",

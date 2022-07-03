@@ -2,8 +2,7 @@ import React from "react";
 import TodoItem from "./TodoItem";
 import AddItem from "./AddItem";
 import styled from "styled-components";
-
-const StyledTodoList = styled.div``;
+import {AnimatePresence, motion} from "framer-motion"
 
 const StyledTodoHeader = styled.div`
 	background-color: #d8d8d8;
@@ -35,19 +34,41 @@ function TodoList({ list, data }) {
 		tagInput,
 	};
 	return (
-		<StyledTodoList>
+		<div>
 			<StyledTodoHeader>Todo</StyledTodoHeader>
 			<AddItem data={addItemObject} />
-			{list.map(item => (
-				<TodoItem
-					handleCompletedItem={data.handleCompletedItem}
-					handleDeletedItem={data.handleDeletedItem}
-					handleEditItem={data.handleEditItem}
-					item={item}
-					key={item.id}
-				/>
-			))}
-		</StyledTodoList>
+			<AnimatePresence>
+				{list.map((item, index) => (
+					<motion.div
+						variants={{
+							hidden: {
+								opacity: 0,
+								y: 25 * index,
+							},
+							visible: i => ({
+								opacity: 1,
+								y: 0,
+								transition: {
+									type: "spring",
+									delay: i * 0.05,
+								},
+							}),
+						}}
+						initial="hidden"
+						animate="visible"
+						custom={index}
+					>
+						<TodoItem
+							key={item.id}
+							handleCompletedItem={data.handleCompletedItem}
+							handleDeletedItem={data.handleDeletedItem}
+							handleEditItem={data.handleEditItem}
+							item={item}
+						/>
+					</motion.div>
+				))}
+			</AnimatePresence>
+		</div>
 	);
 }
 

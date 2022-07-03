@@ -9,11 +9,4 @@ const originalTodoList = jsonOriginalTodoListObjectList.map(object => {
 	return object;
 });
 
-const jsonOriginalCompletedListData = jsonData["originalCompletedList"];
-
-const originalCompletedList = jsonOriginalCompletedListData.map(object => {
-	object.id = nanoid();
-	return object;
-});
-
-export { originalTodoList, originalCompletedList };
+export { originalTodoList };

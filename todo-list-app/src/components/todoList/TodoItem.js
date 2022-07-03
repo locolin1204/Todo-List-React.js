@@ -1,12 +1,9 @@
 import React from "react";
 import styled from "styled-components";
 import { IoCheckbox as CompletedCheckBoxIcon } from "react-icons/io5";
-import {
-	MdCheckBoxOutlineBlank as EmptyCheckBoxIcon,
-	MdModeEditOutline as EditIcon,
-} from "react-icons/md";
-import { GoX as CrossIcon } from "react-icons/go";
+import { MdCheckBoxOutlineBlank as EmptyCheckBoxIcon } from "react-icons/md";
 import { IconContext } from "react-icons";
+import ItemTagIcons from "./components/ItemTagIcon";
 
 const StyledTodoItem = styled.div`
 	display: flex;
@@ -17,47 +14,21 @@ const StyledTodoItem = styled.div`
 	font-size: 1.1rem;
 `;
 
-const StyledText = styled.div``;
-
-const Icons = ({ className, children}) => (
+const Icons = ({ className, children }) => (
 	<IconContext.Provider value={{ className }}>{children}</IconContext.Provider>
 );
 
 const StyledIcons = styled(Icons)`
+	display: flex;
+	align-items: center;
 	padding: 0.5rem;
 	cursor: pointer;
+	font-size: inherit;
 `;
 
 const StyledIconText = styled.div`
 	display: flex;
 	align-items: center;
-`;
-
-const StyledTag = styled.button`
-	--home-tag-color: #0059d6;
-	--work-tag-color: #1c9f11;
-	background-color: #e2eeff;
-	font-size: 0.9rem;
-	padding: 0.4rem 1.3rem;
-	border: solid 1px;
-	border-radius: 50rem;
-	margin-left: 1.3rem;
-
-	${({ home }) => {
-		if (home) {
-			return `
-				color: var(--home-tag-color);
-				border-color: var(--home-tag-color);
-				background-color: #e2eeff;
-			`;
-		} else {
-			return `
-				color: var(--work-tag-color);
-				border-color: var(--work-tag-color);
-				background-color: #e1ffde;
-			`;
-		}
-	}}
 `;
 
 function TodoItem({
@@ -66,31 +37,22 @@ function TodoItem({
 	handleCompletedItem,
 	handleEditItem,
 }) {
+	const itemTagIconsChildrenObject = { handleEditItem, handleDeletedItem };
+
 	return (
 		<StyledTodoItem>
 			<StyledIconText>
 				<StyledIcons>
-					<div onClick={() => handleCompletedItem(item.id, item.completed)}>
+					<div onClick={() => handleCompletedItem(item.id)}>
 						{item.completed ? <CompletedCheckBoxIcon /> : <EmptyCheckBoxIcon />}
 					</div>
 				</StyledIcons>
-				<StyledText> {item.text} </StyledText>
-				{item.home && <StyledTag home>home</StyledTag>}
-				{item.work && <StyledTag>work</StyledTag>}
+				<div> {item.text} </div>
 			</StyledIconText>
-			<div>
-				<StyledIcons>
-					<EditIcon onClick={() => handleEditItem(item.id)} />
-				</StyledIcons>
-				<StyledIcons>
-					<CrossIcon
-						onClick={() => handleDeletedItem(item.id, item.completed)}
-					/>
-				</StyledIcons>
-			</div>
+			<ItemTagIcons item={item} data={itemTagIconsChildrenObject} />
 		</StyledTodoItem>
 	);
 }
 
 export default TodoItem;
-export { StyledTodoItem, StyledIconText, StyledTag, StyledIcons };
+export { StyledTodoItem, StyledIconText, StyledIcons };
