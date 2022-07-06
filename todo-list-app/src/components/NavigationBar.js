@@ -37,8 +37,9 @@ function NavBar({ handleNavBar }) {
 	return (
 		<div>
 			<StyledNavBar>
-				{navBarList.map(item => (
+				{navBarList.map((item, index) => (
 					<StyledNavItem
+						key={index}
 						onClick={() => {
 							handleNavBar(item.action);
 						}}

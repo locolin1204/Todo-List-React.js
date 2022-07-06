@@ -49,14 +49,20 @@ function TodoList({ list, data }) {
 								opacity: 1,
 								y: 0,
 								transition: {
-									type: "spring",
+									ease: "easeInOut",
+									// type: "spring",
 									delay: i * 0.05,
 								},
 							}),
+							removed: {
+								opacity: 0,
+							},
 						}}
 						initial="hidden"
 						animate="visible"
+						exit="removed"
 						custom={index}
+						key={index}
 					>
 						<TodoItem
 							key={item.id}
