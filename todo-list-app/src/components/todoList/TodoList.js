@@ -15,7 +15,7 @@ const StyledTodoHeader = styled.div`
 	/* box-shadow: rgba(0, 0, 0, 0.15) 2.4px 2.4px 3.2px; */
 `;
 
-function TodoList({ list, data }) {
+function TodoList({ uncompletedList, data }) {
 	const {
 		handleTextInput,
 		handleAddItem,
@@ -34,13 +34,12 @@ function TodoList({ list, data }) {
 		tagInput,
 	};
 
-
 	return (
 		<div>
 			<StyledTodoHeader>Todo</StyledTodoHeader>
 			<AddItem data={addItemObject} />
 			<AnimatePresence>
-				{list.map((item, index) => (
+				{uncompletedList.map((item, index) => (
 					<motion.div
 						variants={{
 							hidden: {

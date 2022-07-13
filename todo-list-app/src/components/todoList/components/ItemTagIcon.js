@@ -24,7 +24,7 @@ const StyledTag = styled.button`
 		if (!isTag) {
 			return `
 	background-color: white;
-color:#a7a7a7;
+	color:#a7a7a7;
 				`;
 		}
 		if (home) {

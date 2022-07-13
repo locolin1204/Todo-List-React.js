@@ -33,19 +33,12 @@ function App() {
 	const [list, setList] = useState(originalTodoList);
 	const [textInput, setTextInput] = useState({ text: "", readOnly: false });
 	const [tagInput, setTagInput] = useState({ home: false, work: false });
-
 	const [filter, setFilter] = useState(null);
 
-	let completedList = list.filter(item => {
-		if (item.completed === true && (filter === null || item[filter])) { return item; } 
-			return null;
-	});
-
-	let uncompletedList = list.filter(item => {
-		if (item.completed === false && (filter === null || item[filter])) { return item; }
+	let filteredList = list.filter(item => {
+		if (filter === null || item[filter]) { return item;}
 		return null;
 	});
-
 	const handleTextInput = e => {
 		setTextInput({ ...textInput, text: e.target.value });
 	};
@@ -64,11 +57,11 @@ function App() {
 		setTagInput({ home: false, work: false });
 	};
 
-	const handleHomeTag = id => {
+	const handleHomeTag = () => {
 		setTagInput({ ...tagInput, home: !tagInput.home });
 	};
 
-	const handleWorkTag = id => {
+	const handleWorkTag = () => {
 		setTagInput({ ...tagInput, work: !tagInput.work });
 	};
 
@@ -88,10 +81,6 @@ function App() {
 	};
 
 	const handleEditItem = id => {};
-
-	useEffect(() => {
-		console.log(`This is useEffect = ${filter}`);
-	}, [filter]);
 
 	const todoListChildrenObject = {
 		handleTextInput,
@@ -113,12 +102,15 @@ function App() {
 
 	return (
 		<Main>
-			<NavBar filterItem={setFilter} />
+			<NavBar filterItem={setFilter} active={filter}/>
 			<Container>
 				<Header />
-				<TodoList list={uncompletedList} data={todoListChildrenObject} />
+				<TodoList
+					uncompletedList={filteredList.filter(item => !item.completed)}
+					data={todoListChildrenObject}
+				/>
 				<CompletedList
-					completedList={completedList}
+					completedList={filteredList.filter(item => item.completed)}
 					data={completedListChildrenObject}
 				/>
 			</Container>

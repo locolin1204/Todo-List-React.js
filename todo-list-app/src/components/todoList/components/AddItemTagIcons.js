@@ -4,6 +4,10 @@ import { MdOutlineAdd as AddIcon } from "react-icons/md";
 import { StyledIcons } from "../TodoItem";
 import { StyledTag, StyledItemTagIcons } from "./ItemTagIcon";
 
+const StyledAddIcon = styled(StyledIcons)`
+	margin-left: 2rem;
+`;
+
 const StyledTagButton = styled(StyledTag)`
 	--tag-color-inactive: #a7a7a7;
 	--tag-color-home-active: #0059d6;
@@ -50,13 +54,13 @@ function AddItemTagIcons({data}) {
 			>
 				work
 			</StyledTagButton>
-			<StyledIcons>
+			<StyledAddIcon>
 				<AddIcon
 					onClick={() => {
 						data.textInput.text && data.handleAddItem();
 					}}
 				/>
-			</StyledIcons>
+			</StyledAddIcon>
 		</StyledItemTagIcons>
 	);
 }
