@@ -39,21 +39,19 @@ color:#a7a7a7;
 			`;
 		}
 	}}
-	
 `;
-
 
 function ItemTagIcons({ item, data }) {
 	return (
 		<StyledItemTagIcons>
-			<StyledTag home isTag={item.home}>home</StyledTag>
+			<StyledTag home isTag={item.home}>
+				home
+			</StyledTag>
 			<StyledTag isTag={item.work}>work</StyledTag>
 
 			<StyledIcons>
 				<EditIcon onClick={() => data.handleEditItem(item.id)} />
-				<CrossIcon
-					onClick={() => data.handleDeletedItem(item.id)}
-				/>
+				<CrossIcon onClick={() => data.handleDeletedItem(item.id)} />
 			</StyledIcons>
 		</StyledItemTagIcons>
 	);

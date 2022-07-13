@@ -4,8 +4,8 @@ import TodoList from "./components/TodoList/TodoList";
 import styled from "styled-components";
 import { nanoid } from "nanoid";
 import CompletedList from "./components/CompletedList/CompletedList";
-import NavBar from "./components/NavigationBar";
 import { originalTodoList } from "./data/processData";
+import NavBar from "./components/NavigationBar";
 
 const Main = styled.div`
 	margin: 0;
@@ -34,20 +34,20 @@ function App() {
 	const [textInput, setTextInput] = useState({ text: "", readOnly: false });
 	const [tagInput, setTagInput] = useState({ home: false, work: false });
 
-	const completedList = list.filter((item)=>item.completed === true);
-	const uncompletedList = list.filter(item => item.completed === false);
+	const [filter, setFilter] = useState(null);
 
-	// useEffect(() => {
-	// 	setDisplayList(list);
-	// }, [list]);
+	let completedList = list.filter(item => {
+		if (item.completed === true && (filter === null || item[filter])) { return item; } 
+			return null;
+	});
 
-	// useEffect(() => {
-	// 	setDisplayCompleteList(completedList);
-	// }, [completedList]);
-
+	let uncompletedList = list.filter(item => {
+		if (item.completed === false && (filter === null || item[filter])) { return item; }
+		return null;
+	});
 
 	const handleTextInput = e => {
-		setTextInput({...textInput ,text: e.target.value});
+		setTextInput({ ...textInput, text: e.target.value });
 	};
 
 	const handleAddItem = () => {
@@ -60,51 +60,38 @@ function App() {
 		};
 		const newLists = [newItem, ...list];
 		setList(newLists);
-		setTextInput({ ...textInput, text: ""});
+		setTextInput({ ...textInput, text: "" });
 		setTagInput({ home: false, work: false });
 	};
 
-	const handleHomeTag = (id) => {
+	const handleHomeTag = id => {
 		setTagInput({ ...tagInput, home: !tagInput.home });
 	};
 
-
-	const handleWorkTag = (id) => {
+	const handleWorkTag = id => {
 		setTagInput({ ...tagInput, work: !tagInput.work });
 	};
 
-const handleCompletedItem = (id) => {
-	const newList = list.map(item => {
-		if (item.id === id) {
-			item.completed = !item.completed;
-		}
-		return item;
-	});
-	setList(newList);
-};
-
-	const handleDeletedItem = (id) => {
-			const newList = list.filter(item => item.id !== id);
-			setList(newList);
+	const handleCompletedItem = id => {
+		const newList = list.map(item => {
+			if (item.id === id) {
+				item.completed = !item.completed;
+			}
+			return item;
+		});
+		setList(newList);
 	};
 
-	const handleEditItem = id => {
-
+	const handleDeletedItem = id => {
+		const newList = list.filter(item => item.id !== id);
+		setList(newList);
 	};
 
-	const handleNavBar = type => {
-		// if (type === null) {
-		// 	setDisplayList(list);
-		// 	setDisplayCompleteList(completedList);
-		// } else {
-		// 	const newList = list.filter(item => item[type] === true);
-		// 	setDisplayList(newList);
-		// 	const newCompletedList = completedList.filter(
-		// 		item => item.completed === true && item[type] === true
-		// 	);
-		// 	setDisplayCompleteList(newCompletedList);
-		// }
-	};
+	const handleEditItem = id => {};
+
+	useEffect(() => {
+		console.log(`This is useEffect = ${filter}`);
+	}, [filter]);
 
 	const todoListChildrenObject = {
 		handleTextInput,
@@ -126,9 +113,9 @@ const handleCompletedItem = (id) => {
 
 	return (
 		<Main>
-			<NavBar handleNavBar={handleNavBar} />
+			<NavBar filterItem={setFilter} />
 			<Container>
-				<Header></Header>
+				<Header />
 				<TodoList list={uncompletedList} data={todoListChildrenObject} />
 				<CompletedList
 					completedList={completedList}

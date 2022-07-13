@@ -33,7 +33,7 @@ const navBarList = [
 	},
 ];
 
-function NavBar({ handleNavBar }) {
+function NavBar({ filterItem }) {
 	return (
 		<div>
 			<StyledNavBar>
@@ -41,7 +41,8 @@ function NavBar({ handleNavBar }) {
 					<StyledNavItem
 						key={index}
 						onClick={() => {
-							handleNavBar(item.action);
+							filterItem(item.action);
+							console.log(item.action);
 						}}
 					>
 						{item.title}

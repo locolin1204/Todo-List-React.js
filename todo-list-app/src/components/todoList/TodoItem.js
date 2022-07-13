@@ -37,7 +37,10 @@ function TodoItem({
 	handleCompletedItem,
 	handleEditItem,
 }) {
-	const itemTagIconsChildrenObject = { handleEditItem, handleDeletedItem };
+	const itemTagIconsChildrenObject = {
+		handleEditItem,
+		handleDeletedItem,
+	};
 
 	return (
 		<StyledTodoItem>

@@ -5,3 +5,4 @@ You may visit the Todo List [Here](https://locolin1204.github.io/Todo-List-React
 In this project the following library is used
 
 - styled-components
+- framer-motion

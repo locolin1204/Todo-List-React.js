@@ -33,6 +33,8 @@ function TodoList({ list, data }) {
 		textInput,
 		tagInput,
 	};
+
+
 	return (
 		<div>
 			<StyledTodoHeader>Todo</StyledTodoHeader>
@@ -50,7 +52,6 @@ function TodoList({ list, data }) {
 								y: 0,
 								transition: {
 									ease: "easeInOut",
-									// type: "spring",
 									delay: i * 0.05,
 								},
 							}),
