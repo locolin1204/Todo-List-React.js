@@ -1,9 +1,21 @@
 import React from "react";
 
-function Header() {
+
+function Header({ title }) {
+	function renderTitle(title) {
+		switch (title) {
+			case "home":
+				return "Home";
+			case "work":
+				return "Work";
+			default:
+				return "Todo List";
+		}
+	}
+
 	return (
 		<div>
-			<h1>Todo List</h1>
+			<h1>{renderTitle(title)}</h1>
 		</div>
 	);
 }

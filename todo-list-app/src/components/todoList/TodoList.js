@@ -15,7 +15,7 @@ const StyledTodoHeader = styled.div`
 	/* box-shadow: rgba(0, 0, 0, 0.15) 2.4px 2.4px 3.2px; */
 `;
 
-function TodoList({ uncompletedList, data }) {
+function TodoList({ uncompletedList, data, hasListRendered }) {
 	const {
 		handleTextInput,
 		handleAddItem,
@@ -42,10 +42,10 @@ function TodoList({ uncompletedList, data }) {
 				{uncompletedList.map((item, index) => (
 					<motion.div
 						variants={{
-							hidden: {
+							hidden: i => ({
 								opacity: 0,
-								y: 25 * index,
-							},
+								y: 25 * i,
+							}),
 							visible: i => ({
 								opacity: 1,
 								y: 0,
@@ -62,13 +62,14 @@ function TodoList({ uncompletedList, data }) {
 						animate="visible"
 						exit="removed"
 						custom={index}
-						key={index}
+						key={item.id}
 					>
 						<TodoItem
 							key={item.id}
 							handleCompletedItem={data.handleCompletedItem}
 							handleDeletedItem={data.handleDeletedItem}
 							handleEditItem={data.handleEditItem}
+							handleTagChange={data.handleTagChange}
 							item={item}
 						/>
 					</motion.div>

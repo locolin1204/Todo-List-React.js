@@ -1,11 +1,11 @@
 import Header from "./components/Header";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import TodoList from "./components/TodoList/TodoList";
 import styled from "styled-components";
 import { nanoid } from "nanoid";
 import CompletedList from "./components/CompletedList/CompletedList";
 import { originalTodoList } from "./data/processData";
-import NavBar from "./components/NavigationBar";
+import NavBar from "./components/NavBar";
 
 const Main = styled.div`
 	margin: 0;
@@ -20,7 +20,7 @@ const Main = styled.div`
 	max-width: 900px;
 	/* box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px; */
 	box-shadow: rgba(97, 184, 250, 0.2) 0px 7px 29px 0px;
-	margin-top: 5em;
+	margin-top: 6em;
 `;
 
 const Container = styled.div`
@@ -35,10 +35,19 @@ function App() {
 	const [tagInput, setTagInput] = useState({ home: false, work: false });
 	const [filter, setFilter] = useState(null);
 
+	const[individualTag, setIndividualTag]= useState(true);
+
 	let filteredList = list.filter(item => {
 		if (filter === null || item[filter]) { return item;}
 		return null;
 	});
+
+	let hasRenderedListRef = useRef(false);
+
+	useEffect(() => {
+		// hasRenderedListRef.current = true;
+	}, []);
+
 	const handleTextInput = e => {
 		setTextInput({ ...textInput, text: e.target.value });
 	};
@@ -82,6 +91,12 @@ function App() {
 
 	const handleEditItem = id => {};
 
+	const handleTagChange = (id, tag) =>{
+		const item = list.find(item => item.id === id);
+		item[tag] = !item[tag];
+		setIndividualTag(!individualTag);
+	};
+
 	const todoListChildrenObject = {
 		handleTextInput,
 		handleAddItem,
@@ -92,26 +107,31 @@ function App() {
 		handleCompletedItem,
 		handleDeletedItem,
 		handleEditItem,
+
+		handleTagChange,
 	};
 
 	const completedListChildrenObject = {
 		handleCompletedItem,
 		handleDeletedItem,
 		handleEditItem,
+		handleTagChange,
 	};
 
 	return (
 		<Main>
-			<NavBar filterItem={setFilter} active={filter}/>
+			<NavBar filterItem={setFilter} active={filter} />
 			<Container>
-				<Header />
+				<Header title={filter} />
 				<TodoList
 					uncompletedList={filteredList.filter(item => !item.completed)}
 					data={todoListChildrenObject}
+					// hasListRendered={hasRenderedListRef}
 				/>
 				<CompletedList
 					completedList={filteredList.filter(item => item.completed)}
 					data={completedListChildrenObject}
+					hasListRendered={hasRenderedListRef}
 				/>
 			</Container>
 		</Main>

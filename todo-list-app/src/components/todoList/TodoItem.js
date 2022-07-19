@@ -36,10 +36,12 @@ function TodoItem({
 	handleDeletedItem,
 	handleCompletedItem,
 	handleEditItem,
+	handleTagChange,
 }) {
 	const itemTagIconsChildrenObject = {
 		handleEditItem,
 		handleDeletedItem,
+		handleTagChange,
 	};
 
 	return (

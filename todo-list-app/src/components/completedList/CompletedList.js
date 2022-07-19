@@ -11,7 +11,7 @@ const CompletedTodoItem = styled.div`
 	opacity: 60%;
 `;
 
-const CompletedList = ({ completedList, data }) => {
+const CompletedList = ({ completedList, data, hasListRendered }) => {
 	return (
 		<div>
 			<StyledCompletedHeader>Completed</StyledCompletedHeader>
@@ -19,10 +19,10 @@ const CompletedList = ({ completedList, data }) => {
 				{completedList.map((item, index) => (
 					<motion.div
 						variants={{
-							hidden: {
+							hidden: i => ({
 								opacity: 0,
-								y: 25 * index,
-							},
+								y: 25 * i,
+							}),
 							visible: i => ({
 								opacity: 1,
 								y: 0,
@@ -36,18 +36,19 @@ const CompletedList = ({ completedList, data }) => {
 								opacity: 0,
 							},
 						}}
-						initial="hidden"
+						initial={hasListRendered.current ? "visible" : "hidden"}
 						animate="visible"
 						exit="removed"
 						custom={index}
-						key={index}
+						key={item.id}
 					>
-						<CompletedTodoItem key={index}>
+						<CompletedTodoItem key={item.id}>
 							<TodoItem
-								key={index}
+								key={item.id}
 								handleCompletedItem={data.handleCompletedItem}
 								handleDeletedItem={data.handleDeletedItem}
 								handleEditItem={data.handleEditItem}
+								handleTagChange={data.handleTagChange}
 								item={item}
 							/>
 						</CompletedTodoItem>

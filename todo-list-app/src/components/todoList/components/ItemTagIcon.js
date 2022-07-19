@@ -3,7 +3,7 @@ import { MdModeEditOutline as EditIcon } from "react-icons/md";
 import { GoX as CrossIcon } from "react-icons/go";
 import { StyledIcons } from "../TodoItem";
 import styled from "styled-components";
-
+import { useState } from "react";
 const StyledItemTagIcons = styled.div`
 	display: flex;
 	justify-content: center;
@@ -19,6 +19,7 @@ const StyledTag = styled.button`
 	border-radius: 50rem;
 	margin-right: 0.8rem;
 	width: 5rem;
+	cursor: pointer;
 
 	${({ home, isTag }) => {
 		if (!isTag) {
@@ -44,10 +45,23 @@ const StyledTag = styled.button`
 function ItemTagIcons({ item, data }) {
 	return (
 		<StyledItemTagIcons>
-			<StyledTag home isTag={item.home}>
+			<StyledTag
+				home
+				isTag={item.home}
+				onClick={() => {
+					data.handleTagChange(item.id, "home");
+				}}
+			>
 				home
 			</StyledTag>
-			<StyledTag isTag={item.work}>work</StyledTag>
+			<StyledTag
+				isTag={item.work}
+				onClick={() => {
+					data.handleTagChange(item.id, "work");
+				}}
+			>
+				work
+			</StyledTag>
 
 			<StyledIcons>
 				<EditIcon onClick={() => data.handleEditItem(item.id)} />

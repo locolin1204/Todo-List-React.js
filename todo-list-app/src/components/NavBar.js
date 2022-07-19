@@ -9,25 +9,40 @@ const StyledNavItem = styled.button`
 	&:focus {
 		outline: none;
 	}
-	/* border: white solid 1px; */
 	width: 8em;
 	border: none;
 	background-color: white;
 	font-size: inherit;
-	color: #3f3f3f;
+	color: #b0b0b0;
 	padding: 0.5rem 1.5rem;
-	box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+	box-shadow: #ebf3fe 0px -10px 10px -10px inset;
 	cursor: pointer;
+	position: relative;
+	bottom: 2.255em;
+	/* 
+	&:hover {
+		color: #609aec;
+		transition-property: color, box-shadow;
+		transition-duration: 500ms;
+		box-shadow: #d0e4ff 0px -10px 10px -10px inset;
+	} */
 
 	${({ curActive }) => {
 		if (curActive) {
 			return `
 			border-top: 2px solid #609aec;
-			background: #ebf3fe;
-			font-weight: bold;
-			box-shadow: rgba(0, 0, 0, 0.05) 1.95px 1.95px 2.6px;
+			box-shadow: none;
 			color: #609aec;
 		`;
+		} else {
+			return `
+			&:hover {
+				color: #609aec;
+				transition-property: color, box-shadow;
+				transition-duration: 500ms;
+				box-shadow: #d0e4ff 0px -10px 10px -10px inset;
+			}
+			`;
 		}
 	}}
 `;
