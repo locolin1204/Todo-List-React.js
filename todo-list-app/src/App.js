@@ -1,9 +1,9 @@
 import Header from "./components/Header";
 import React, { useState, useEffect, useRef } from "react";
-import TodoList from "./components/TodoList/TodoList";
+import TodoList from "./components/todoList/TodoList";
 import styled from "styled-components";
 import { nanoid } from "nanoid";
-import CompletedList from "./components/CompletedList/CompletedList";
+import CompletedList from "./components/completedList/CompletedList";
 import { originalTodoList } from "./data/processData";
 import NavBar from "./components/NavBar";
 
@@ -48,6 +48,7 @@ function App() {
 		// hasRenderedListRef.current = true;
 	}, []);
 
+	
 	const handleTextInput = e => {
 		setTextInput({ ...textInput, text: e.target.value });
 	};
@@ -89,7 +90,17 @@ function App() {
 		setList(newList);
 	};
 
-	const handleEditItem = id => {};
+	const handleEditItem = (e, id) => {
+		const tempText = e.target.value;
+		const newList = list.map(item => {
+			if (item.id === id) {
+				item.text = tempText;
+			}
+			return item;
+		});
+		setList(newList)
+	};
+
 
 	const handleTagChange = (id, tag) =>{
 		const item = list.find(item => item.id === id);
@@ -117,7 +128,7 @@ function App() {
 		handleEditItem,
 		handleTagChange,
 	};
-
+	
 	return (
 		<Main>
 			<NavBar filterItem={setFilter} active={filter} />
@@ -126,7 +137,7 @@ function App() {
 				<TodoList
 					uncompletedList={filteredList.filter(item => !item.completed)}
 					data={todoListChildrenObject}
-					// hasListRendered={hasRenderedListRef}
+					hasListRendered={hasRenderedListRef}
 				/>
 				<CompletedList
 					completedList={filteredList.filter(item => item.completed)}

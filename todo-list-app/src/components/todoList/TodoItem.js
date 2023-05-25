@@ -24,25 +24,60 @@ const StyledIcons = styled(Icons)`
 	padding: 0.5rem;
 	cursor: pointer;
 	font-size: inherit;
+	&:hover {
+		background-color: #f7f7f7;
+		border-radius: 50%;
+	}
 `;
 
 const StyledIconText = styled.div`
 	display: flex;
 	align-items: center;
+	width: 100%;
 `;
 
-function TodoItem({
-	item,
-	handleDeletedItem,
-	handleCompletedItem,
-	handleEditItem,
-	handleTagChange,
-}) {
+const StyledInputText = styled.input`
+	border: none;
+	outline: none;
+	background: none;
+	font-size: inherit;
+	width:100%;
+	&::placeholder {
+		color: black;
+	}
+	&:focus{
+		color:#737373;
+		font-size:600;
+	}
+`;
+
+function TodoItem(
+	{
+		item,
+		handleDeletedItem,
+		handleCompletedItem,
+		handleEditItem,
+		handleTagChange,
+	},
+) {
+
+	const handleEditItemFocus = () => {
+		if (inputRef && inputRef.current) {
+			inputRef.current.focus();
+	} else {
+			console.error(`Could not focus input`);
+	}
+	}
+
 	const itemTagIconsChildrenObject = {
 		handleEditItem,
 		handleDeletedItem,
 		handleTagChange,
+		handleEditItemFocus,
 	};
+
+	const inputRef = React.useRef();
+
 
 	return (
 		<StyledTodoItem>
@@ -52,12 +87,17 @@ function TodoItem({
 						{item.completed ? <CompletedCheckBoxIcon /> : <EmptyCheckBoxIcon />}
 					</div>
 				</StyledIcons>
-				<div> {item.text} </div>
+				{/* <div> {item.text} </div> */}
+				<StyledInputText
+					value={item.text}
+					onChange={e => handleEditItem(e, item.id)}
+					ref={inputRef}
+				/>
 			</StyledIconText>
 			<ItemTagIcons item={item} data={itemTagIconsChildrenObject} />
 		</StyledTodoItem>
 	);
 }
 
-export default TodoItem;
+export default React.forwardRef(TodoItem);
 export { StyledTodoItem, StyledIconText, StyledIcons };

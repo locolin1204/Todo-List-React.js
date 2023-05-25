@@ -6,6 +6,10 @@ import { StyledTag, StyledItemTagIcons } from "./ItemTagIcon";
 
 const StyledAddIcon = styled(StyledIcons)`
 	margin-left: 2rem;
+	&:hover {
+      background-color: #f7f7f7;
+			border-radius: 50%;
+  }
 `;
 
 const StyledTagButton = styled(StyledTag)`

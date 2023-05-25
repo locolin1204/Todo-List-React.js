@@ -1,6 +1,6 @@
 import styled from "styled-components";
-import TodoItem from "../TodoList/TodoItem";
-import { StyledTodoHeader } from "../TodoList/TodoList";
+import TodoItem from "../todoList/TodoItem";
+import { StyledTodoHeader } from "../todoList/TodoList";
 import { AnimatePresence, motion } from "framer-motion";
 
 const StyledCompletedHeader = styled(StyledTodoHeader)`
@@ -11,7 +11,7 @@ const CompletedTodoItem = styled.div`
 	opacity: 60%;
 `;
 
-const CompletedList = ({ completedList, data, hasListRendered }) => {
+const CompletedList = ({ completedList, data, hasListRendered}) => {
 	return (
 		<div>
 			<StyledCompletedHeader>Completed</StyledCompletedHeader>
@@ -50,6 +50,9 @@ const CompletedList = ({ completedList, data, hasListRendered }) => {
 								handleEditItem={data.handleEditItem}
 								handleTagChange={data.handleTagChange}
 								item={item}
+								isEditing={data.isEditing}
+
+								handleEditItemFocus={data.handleEditItemFocus}
 							/>
 						</CompletedTodoItem>
 					</motion.div>

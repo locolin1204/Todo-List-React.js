@@ -15,7 +15,7 @@ const StyledTodoHeader = styled.div`
 	/* box-shadow: rgba(0, 0, 0, 0.15) 2.4px 2.4px 3.2px; */
 `;
 
-function TodoList({ uncompletedList, data, hasListRendered }) {
+function TodoList({ uncompletedList, data, hasListRendered}) {
 	const {
 		handleTextInput,
 		handleAddItem,
@@ -23,6 +23,10 @@ function TodoList({ uncompletedList, data, hasListRendered }) {
 		handleWorkTag,
 		textInput,
 		tagInput,
+		handleEditItemFocus,
+
+		inputRendered,
+		setInputRendered
 	} = data;
 
 	const addItemObject = {
@@ -33,6 +37,7 @@ function TodoList({ uncompletedList, data, hasListRendered }) {
 		textInput,
 		tagInput,
 	};
+
 
 	return (
 		<div>
@@ -70,7 +75,13 @@ function TodoList({ uncompletedList, data, hasListRendered }) {
 							handleDeletedItem={data.handleDeletedItem}
 							handleEditItem={data.handleEditItem}
 							handleTagChange={data.handleTagChange}
+							isEditing={data.isEditing}
 							item={item}
+							handleEditItemFocus={handleEditItemFocus}
+						
+							inputRendered={inputRendered}
+							setInputRendered={setInputRendered}
+							
 						/>
 					</motion.div>
 				))}

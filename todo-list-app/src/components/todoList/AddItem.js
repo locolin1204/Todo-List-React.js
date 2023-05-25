@@ -29,7 +29,7 @@ function AddItem({ data }) {
 
 	React.useEffect(() => {
 		itemInputRef.current.focus();
-	});
+	},[]);
 
 	return (
 		<StyledTodoItem>

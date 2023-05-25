@@ -13,69 +13,6 @@
 			"home": false,
 			"work": true,
 			"completed": false
-		},
-		{
-			"id": null,
-			"text": "Testing",
-			"home": true,
-			"work": false,
-			"completed": true
-		},
-		{
-			"id": null,
-			"text": "Complete React.js",
-			"home": true,
-			"work": true,
-			"completed": true
-		},
-		{
-			"id": null,
-			"text": "Complete Next.js",
-			"home": false,
-			"work": false,
-			"completed": true
-		},
-		{
-			"id": null,
-			"text": "Good Morning",
-			"home": true,
-			"work": false,
-			"completed": false
-		},
-		{
-			"id": null,
-			"text": "Good Night",
-			"home": false,
-			"work": true,
-			"completed": false
-		},
-		{
-			"id": null,
-			"text": "Good Morning",
-			"home": true,
-			"work": false,
-			"completed": false
-		},
-		{
-			"id": null,
-			"text": "Good Night",
-			"home": false,
-			"work": true,
-			"completed": false
-		},
-		{
-			"id": null,
-			"text": "Good Morning",
-			"home": true,
-			"work": false,
-			"completed": false
-		},
-		{
-			"id": null,
-			"text": "Good Night",
-			"home": false,
-			"work": true,
-			"completed": false
 		}
 	]
 }

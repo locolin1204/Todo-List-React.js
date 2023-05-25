@@ -3,7 +3,6 @@ import { MdModeEditOutline as EditIcon } from "react-icons/md";
 import { GoX as CrossIcon } from "react-icons/go";
 import { StyledIcons } from "../TodoItem";
 import styled from "styled-components";
-import { useState } from "react";
 const StyledItemTagIcons = styled.div`
 	display: flex;
 	justify-content: center;
@@ -64,7 +63,7 @@ function ItemTagIcons({ item, data }) {
 			</StyledTag>
 
 			<StyledIcons>
-				<EditIcon onClick={() => data.handleEditItem(item.id)} />
+				<EditIcon onClick={() => data.handleEditItemFocus(item.id)} />
 				<CrossIcon onClick={() => data.handleDeletedItem(item.id)} />
 			</StyledIcons>
 		</StyledItemTagIcons>
