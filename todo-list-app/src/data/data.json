@@ -13,6 +13,20 @@
 			"home": false,
 			"work": true,
 			"completed": false
+		},
+		{
+			"id": null,
+			"text": "Complete React.js",
+			"home": true,
+			"work": true,
+			"completed": true
+		},
+		{
+			"id": null,
+			"text": "Complete Next.js",
+			"home": false,
+			"work": false,
+			"completed": true
 		}
 	]
 }
